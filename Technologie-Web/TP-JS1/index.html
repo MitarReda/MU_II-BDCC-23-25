@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <!-- <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://bootswatch.com/5/sketchy/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Users List</h1>
+    <div class="users">
+        <table class="table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="sort" onclick="sortByFirtName()">First Name</th>
+                    <th class="sort"  onclick="sortByLastName()">Last Name</th>
+                    <th class="sort"  onclick="sortByBirthDate()">Birthday</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                
+            </tbody>
+            <footer>
+                <tr>
+                    <th colspan="4" class="text-center">
+                        Pagination
+                    </th>
+                </tr>
+            </footer>
+        </table>
+    </div>
+    <script src="users.js"></script>
+    <script>
+        // Vous devez remplacer la fonction getUsers() par du code
+        // qui sera exécuté directement.
+        const mappedUsers = users.map(user=>({
+            firstName:user.firstName,
+            lastName:user.lastName,
+            image:user.image,
+            birthDate:user.birthDate
+
+        }))
+        // Champs sur lequel le tri sera effectué
+        var sortField = 'fisrtName'
+        // Ordre de tri 'asc ou 'desc'
+        var order = 'asc'
+        // Numéo de la page 
+        var currentPage = 1
+        // Taille de la page
+        var pageSize = 10
+        
+        function insertDataIntoTable() {
+            const tableBody = document.querySelector('#tbody');
+            tableBody.innerHTML = '';
+            var tes=mappedUsers.slice(0,10);
+            tes.forEach(user => {
+                
+                const row = document.createElement('tr');
+                const firstNameCell = document.createElement('td');
+                firstNameCell.textContent = user.firstName;
+                const lastNameCell = document.createElement('td');
+                lastNameCell.textContent = user.lastName;
+                const birthDayCell = document.createElement('td');
+                birthDayCell.textContent = user.birthDate;
+                const imageCell = document.createElement('td');
+                const userImage = document.createElement('img');
+                userImage.src = user.image;
+                userImage.alt = `${user.firstName}'s Image`;
+                userImage.width = 50;
+                imageCell.appendChild(userImage);
+                row.appendChild(imageCell);
+                row.appendChild(firstNameCell);
+                row.appendChild(lastNameCell);
+                row.appendChild(birthDayCell);
+                tableBody.appendChild(row);
+               
+                
+            });
+        }
+        insertDataIntoTable() 
+        function sortByFirtName() {
+            mappedUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
+            insertDataIntoTable();
+        }
+
+        function sortByLastName() {
+            mappedUsers.sort((a, b) => a.lastName.localeCompare(b.lastName));
+            insertDataIntoTable();
+        }
+
+        function sortByBirthDate() {
+            mappedUsers.sort((a, b) => a.birthDate.localeCompare(b.birthDate));
+            insertDataIntoTable();
+        }
+    </script>
+</div>
+    
+</body>
+</html>
